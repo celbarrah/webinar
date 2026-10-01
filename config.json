@@ -1,0 +1,144 @@
+{
+  "_notes": [
+    "VERCEL (page finale) : python3 build.py puis cd site && npx vercel --prod --yes --scope meladraouy-4670s-projects",
+    "Env Vercel : CLIENTX_TOKEN (integration privee du sous-compte ClientX.ma, locationId sMBdtpAowNv22pz2kxma), CLIENTX_LOCATION_ID, CLIENTX_TAG. Sans jeton, le formulaire repond 'inscriptions bientot ouvertes'.",
+    "form_id / assets.axel|max|jade : utilises seulement par la sortie ClientX de secours (dist/).",
+    "speakers : liste vide = section Intervenants retiree. photo vide = initiales.",
+    "zoom_url : a renseigner des que le compte Zoom Pro est actif, puis rebuild + redeploy.",
+    "speakers photos : fichiers dans assets/speakers/ (copies dans site/assets/speakers/ au build). Sources : Mehdi = webeuz.com, Joris = clientx.uk, Radouane = page Webeuz Academy.",
+    "logos retires le 30/09 (fond plein, s'affichaient en bloc gris avec le filtre blanc) : logo-coralia (doublon Addoha) et renault (Renault Trucks). A remettre avec une version blanche detouree."
+  ],
+  "site_url": "https://masterclass-clientx.vercel.app",
+  "vercel_project": "masterclass-clientx",
+  "confirm_path": "/merci",
+  "form_id": "",
+  "preview_form_id": "UtIYQk5gwWxRT0ZUUqXl",
+  "form_domain": "https://link.clientx.ai",
+  "form_height": 640,
+  "pixel_id": "25447269248228502",
+  "zoom_url": "",
+  "assets": {
+    "logo_header": "https://images.leadconnectorhq.com/image/f_webp/q_80/r_320/u_https://assets.cdn.filesafe.space/yKKBFo4WiCYiUP0GEgmp/media/67d2d3a4a6244fc99b9f9a20.png",
+    "logo_footer": "https://images.leadconnectorhq.com/image/f_webp/q_80/r_320/u_https://assets.cdn.filesafe.space/yKKBFo4WiCYiUP0GEgmp/media/abe66a2a-79b5-4352-94d3-374490b0ac92.png",
+    "axel": "",
+    "max": "",
+    "jade": ""
+  },
+  "speakers": [
+    {
+      "name": "Mehdi Mourabit",
+      "role": "Co-fondateur de ClientX et CEO de Webeuz",
+      "photo": "assets/speakers/mehdi-mourabit.jpg"
+    },
+    {
+      "name": "Joris Blot",
+      "role": "Co-fondateur de ClientX",
+      "photo": "assets/speakers/joris-blot.jpg"
+    },
+    {
+      "name": "Radouane Driouich",
+      "role": "Directeur des opérations média, Webeuz",
+      "photo": "assets/speakers/radouane-driouich.jpg"
+    }
+  ],
+  "logos": [
+    [
+      "inwi_2",
+      "Inwi"
+    ],
+    [
+      "cnss",
+      "CNSS"
+    ],
+    [
+      "ocp_2-1",
+      "OCP"
+    ],
+    [
+      "CIMR",
+      "CIMR"
+    ],
+    [
+      "ford_2",
+      "Ford"
+    ],
+    [
+      "maserati",
+      "Maserati"
+    ],
+    [
+      "jaguar",
+      "Jaguar"
+    ],
+    [
+      "land_rover",
+      "Land Rover"
+    ],
+    [
+      "aston_martin",
+      "Aston Martin"
+    ],
+    [
+      "volvo",
+      "Volvo"
+    ],
+    [
+      "peugoet",
+      "Peugeot"
+    ],
+    [
+      "citroen",
+      "Citroën"
+    ],
+    [
+      "opel_2",
+      "Opel"
+    ],
+    [
+      "GSK",
+      "GSK"
+    ],
+    [
+      "bayer",
+      "Bayer"
+    ],
+    [
+      "chronopost",
+      "Chronopost"
+    ],
+    [
+      "ADDOHA",
+      "Addoha"
+    ],
+    [
+      "tangez_med",
+      "Tanger Med"
+    ],
+    [
+      "sofac_3",
+      "Sofac"
+    ],
+    [
+      "panzani",
+      "Panzani"
+    ],
+    [
+      "menara",
+      "Menara"
+    ],
+    [
+      "cfao",
+      "CFAO"
+    ],
+    [
+      "suzuki",
+      "Suzuki"
+    ],
+    [
+      "chery",
+      "Chery"
+    ]
+  ],
+  "logo_base": "https://clientx.uk/wp-content/uploads/2025/06/{}.png.webp",
+  "favicon": "https://storage.googleapis.com/msgsndr/yKKBFo4WiCYiUP0GEgmp/media/67a59bce69aecb0823186719.png"
+}

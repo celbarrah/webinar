@@ -1,0 +1,225 @@
+<!-- Masterclass ClientX 13 octobre - page de confirmation (etape 2 du funnel)
+     Bloc unique a coller dans un element "Code personnalise" ClientX. Declenche l'evenement Lead du pixel Meta.
+     Genere par build.py depuis src/confirmation.html - ne pas editer dist/ a la main. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+#cxc{--bg:#000;--card:#0c0f0d;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--g:#37ca37;--g-h:#4bd84b;--g-soft:rgba(55,202,55,.12);--g-line:rgba(55,202,55,.38);--tx:#f4f6f5;--mut:#a9b1ac;--mut2:#79817c;--on-g:#03170a;
+  background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;text-align:left;overflow-x:clip}
+#cxc *,#cxc *::before,#cxc *::after{box-sizing:border-box}
+#cxc h1,#cxc h2,#cxc p,#cxc ul,#cxc ol,#cxc li{margin:0;padding:0}
+#cxc ul,#cxc ol{list-style:none}
+#cxc img{display:block;max-width:100%;height:auto;border:0}
+#cxc a{color:inherit;text-decoration:none}
+#cxc .ic{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#cxc .w{max-width:1040px;margin:0 auto;padding:0 20px;width:100%}
+#cxc .top{border-bottom:1px solid var(--line)}
+#cxc .top-in{display:flex;align-items:center;height:68px}
+#cxc .logo{height:42px;width:auto}
+#cxc main{flex:1;position:relative;isolation:isolate;padding:72px 0 88px}
+#cxc main::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(50% 45% at 50% 0%,rgba(55,202,55,.2),transparent 70%)}
+#cxc .hd{text-align:center;max-width:720px;margin:0 auto}
+#cxc .ok{width:76px;height:76px;border-radius:50%;margin:0 auto 26px;display:grid;place-items:center;background:var(--g);color:var(--on-g);box-shadow:0 0 0 10px rgba(55,202,55,.12),0 0 0 22px rgba(55,202,55,.05);animation:cxc-pop .6s cubic-bezier(.2,1.4,.4,1) both}
+#cxc .ok .ic{width:38px;height:38px;stroke-width:3}
+@keyframes cxc-pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+#cxc .eyebrow{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--g);margin-bottom:12px}
+#cxc h1{font-size:clamp(38px,5.6vw,64px);line-height:1.04;letter-spacing:-.04em;font-weight:800;margin-bottom:18px}
+#cxc .lead{font-size:clamp(17px,1.7vw,19px);color:#cfd5d1;line-height:1.6}
+#cxc .lead b{color:var(--tx)}
+#cxc .meta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin:24px 0 28px}
+#cxc .meta li{display:inline-flex;align-items:center;gap:8px;font-size:16px;font-weight:500;color:#d6dbd8}
+#cxc .meta .ic{color:var(--g);width:17px;height:17px}
+
+/* bouton agenda */
+#cxc .cal{position:relative;display:inline-block}
+#cxc .cal summary{list-style:none;display:inline-flex;align-items:center;gap:10px;background:var(--g);color:var(--on-g);font-weight:700;font-size:17px;line-height:1;padding:18px 28px;border-radius:12px;cursor:pointer;box-shadow:0 10px 30px -10px rgba(55,202,55,.55);transition:background .2s}
+#cxc .cal summary:hover{background:var(--g-h)}
+#cxc .cal summary::-webkit-details-marker{display:none}
+#cxc .cal summary:focus-visible,#cxc .cal a:focus-visible{outline:2px solid var(--g);outline-offset:3px}
+#cxc .cal .chev{width:16px;height:16px;transition:transform .2s}
+#cxc .cal[open] .chev{transform:rotate(180deg)}
+#cxc .cal-m{position:absolute;left:50%;transform:translateX(-50%);top:calc(100% + 8px);min-width:270px;background:#111512;border:1px solid var(--line2);border-radius:14px;padding:6px;z-index:5;box-shadow:0 20px 50px -10px rgba(0,0,0,.8);text-align:left}
+#cxc .cal-m a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;font-weight:600;font-size:15px}
+#cxc .cal-m a:hover{background:var(--g-soft)}
+#cxc .cal-m .ic{color:var(--g)}
+
+/* grille */
+#cxc .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:64px;align-items:start}
+#cxc .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px}
+#cxc .card-t{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:16px}
+#cxc .wa{border-radius:16px;overflow:hidden;border:1px solid var(--line2)}
+#cxc .wa-hd{display:flex;align-items:center;gap:12px;background:#1f2c34;padding:11px 14px}
+#cxc .wa-hd img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+#cxc .wa-hd b{display:block;font-size:15px;color:#e9edef;line-height:1.2}
+#cxc .wa-hd small{font-size:12px;color:#8696a0}
+#cxc .wa-body{background:#0b141a radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/18px 18px;padding:16px 14px}
+#cxc .msg{background:#202c33;color:#e9edef;font-size:14.5px;line-height:1.5;padding:9px 11px 20px;border-radius:10px;border-top-left-radius:3px;max-width:92%;position:relative}
+#cxc .msg time{position:absolute;right:9px;bottom:4px;font-size:10.5px;color:rgba(233,237,239,.6)}
+#cxc .msg .lk{color:#53bdeb}
+#cxc .steps{display:flex;flex-direction:column;gap:18px;counter-reset:n}
+#cxc .steps li{display:flex;gap:14px;align-items:flex-start}
+#cxc .steps li::before{counter-increment:n;content:counter(n);width:30px;height:30px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:14px;font-weight:800;color:var(--on-g);background:var(--g)}
+#cxc .steps b{display:block;font-size:16.5px;font-weight:700;margin-bottom:2px}
+#cxc .steps p{font-size:15px;color:var(--mut)}
+#cxc .foot{border-top:1px solid var(--line);padding:30px 0}
+#cxc .foot-in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+#cxc .foot img{height:42px;width:auto}
+#cxc .foot p{font-size:14px;color:var(--mut)}
+/* v3 : boutons agenda visibles */
+#cxc .cal-b{margin-top:30px}
+#cxc .cal-t{font-size:14px;font-weight:600;color:var(--mut);margin-bottom:12px}
+#cxc .cal-row,#cxc .share-b{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+#cxc .cb,#cxc .sb{display:inline-flex;align-items:center;gap:10px;font:inherit;font-weight:700;font-size:15.5px;line-height:1;padding:15px 20px;border-radius:12px;border:1px solid var(--g-line);color:var(--tx);background:rgba(55,202,55,.06);cursor:pointer;transition:background .2s,border-color .2s}
+#cxc .cb:hover,#cxc .sb:hover{background:var(--g-soft);border-color:var(--g)}
+#cxc .cb .ic,#cxc .sb .ic{color:var(--g);width:18px;height:18px}
+#cxc .cb-p{background:var(--g);color:var(--on-g);border-color:var(--g);box-shadow:0 10px 30px -10px rgba(55,202,55,.55)}
+#cxc .cb-p .ic{color:var(--on-g)}
+#cxc .cb-p:hover{background:var(--g-h)}
+#cxc .cb:focus-visible,#cxc .sb:focus-visible{outline:2px solid var(--g);outline-offset:3px}
+/* v3 : invitez un associe */
+#cxc .share{margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:20px 28px;flex-wrap:wrap;background:var(--card);border:1px solid var(--g-line);border-radius:22px;padding:26px}
+#cxc .share-tx .card-t{margin-bottom:8px}
+#cxc .share-tx b{display:block;font-size:19px;font-weight:700;line-height:1.3;margin-bottom:4px}
+#cxc .share-tx p:last-child{font-size:15px;color:var(--mut)}
+@media (max-width:640px){
+  #cxc .cal-row,#cxc .share-b{flex-direction:column;width:100%}
+  #cxc .cb,#cxc .sb{justify-content:center;width:100%}
+  #cxc .share{padding:22px 18px}
+}
+@media (max-width:820px){#cxc .grid{grid-template-columns:1fr;margin-top:48px}}
+@media (max-width:640px){
+  #cxc .w{padding:0 16px}
+  #cxc .top-in{height:64px}
+  #cxc .logo{height:32px}
+  #cxc main{padding:48px 0 64px}
+  #cxc .cal,#cxc .cal summary{width:100%;justify-content:center}
+  #cxc .cal-m{left:0;right:0;transform:none;min-width:0}
+  #cxc .card{padding:20px 16px}
+  #cxc .foot-in{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){#cxc *{animation:none!important;transition:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="cc-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="cc-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="cc-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+  <symbol id="cc-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
+  <symbol id="cc-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="cc-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="cc-video" viewBox="0 0 24 24"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+  <symbol id="cc-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="cc-dl" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+</svg>
+
+<div id="cxc">
+  <header class="top"><div class="w top-in"><img class="logo" src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_320/u_https://assets.cdn.filesafe.space/yKKBFo4WiCYiUP0GEgmp/media/67d2d3a4a6244fc99b9f9a20.png" alt="Webeuz x ClientX" width="140" height="30"></div></header>
+
+  <main>
+    <div class="w">
+      <div class="hd">
+        <div class="ok"><svg class="ic"><use href="#cc-check"/></svg></div>
+        <p class="eyebrow">Inscription confirmée</p>
+        <h1>Votre place est réservée.</h1>
+        <p class="lead">Rendez-vous <b>mardi 13 octobre à 11h</b>. Axel, notre agent IA, vient de vous envoyer la confirmation et le lien Zoom sur WhatsApp. Ajoutez la Masterclass à votre agenda pour ne pas la manquer.</p>
+        <ul class="meta">
+          <li><svg class="ic"><use href="#cc-cal"/></svg>Mardi 13 octobre</li>
+          <li><svg class="ic"><use href="#cc-clock"/></svg>11h</li>
+          <li><svg class="ic"><use href="#cc-video"/></svg>En ligne sur Zoom</li>
+        </ul>
+        <div class="cal-b" role="group" aria-label="Ajouter la Masterclass à votre agenda">
+          <p class="cal-t">Ajoutez la Masterclass à votre agenda</p>
+          <div class="cal-row">
+            <a class="cb cb-p" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Masterclass%20ClientX%20%3A%20Recrutez%20votre%20%C3%A9quipe%20d%27agents%20IA&amp;dates=20261013T100000Z%2F20261013T110000Z&amp;details=Masterclass%20gratuite%20en%20direct.%20Le%20lien%20Zoom%20vous%20a%20%C3%A9t%C3%A9%20envoy%C3%A9%20par%20WhatsApp%20et%20par%20email.&amp;location=En%20ligne%20sur%20Zoom%20%28lien%20envoy%C3%A9%20par%20WhatsApp%20et%20email%29&amp;ctz=Africa%2FCasablanca" target="_blank" rel="noopener"><svg class="ic"><use href="#cc-cal"/></svg>Google Agenda</a>
+            <a class="cb" href="https://outlook.office.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&amp;rru=addevent&amp;subject=Masterclass%20ClientX%20%3A%20Recrutez%20votre%20%C3%A9quipe%20d%27agents%20IA&amp;startdt=2026-10-13T10%3A00%3A00Z&amp;enddt=2026-10-13T11%3A00%3A00Z&amp;body=Masterclass%20gratuite%20en%20direct.%20Le%20lien%20Zoom%20vous%20a%20%C3%A9t%C3%A9%20envoy%C3%A9%20par%20WhatsApp%20et%20par%20email.&amp;location=En%20ligne%20sur%20Zoom%20%28lien%20envoy%C3%A9%20par%20WhatsApp%20et%20email%29" target="_blank" rel="noopener"><svg class="ic"><use href="#cc-cal"/></svg>Outlook</a>
+            <a class="cb" href="#" data-ics download="masterclass-clientx-13-octobre.ics"><svg class="ic"><use href="#cc-dl"/></svg>Apple et autres (.ics)</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <p class="card-t">Sur votre WhatsApp</p>
+          <div class="wa" role="img" aria-label="Illustration : le message de confirmation envoyé par Axel sur WhatsApp">
+            <div class="wa-hd"><img src="A_REMPLACER_URL_AXEL" alt="" width="38" height="38"><div><b>Axel · ClientX</b><small>agent IA</small></div></div>
+            <div class="wa-body">
+              <p class="msg"><span data-hello>Bonjour</span>, Axel de ClientX. Votre place pour la Masterclass « Recrutez votre équipe d'agents IA » du mardi 13 octobre à 11h est confirmée. Votre lien : <span class="lk">lien Zoom</span>. Une question d'ici là ? Répondez à ce message.<time>maintenant</time></p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <p class="card-t">D'ici le 13 octobre</p>
+          <ol class="steps">
+            <li><div><b>Ouvrez WhatsApp</b><p>Axel vous a envoyé la confirmation et le lien Zoom. Vous le recevez aussi par email.</p></div></li>
+            <li><div><b>Ajoutez la date à votre agenda</b><p>Mardi 13 octobre, 11h. Nous vous envoyons aussi un rappel la veille et le jour même.</p></div></li>
+            <li><div><b>Préparez vos questions</b><p>La Masterclass se termine par un temps de questions-réponses en direct.</p></div></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="share">
+        <div class="share-tx">
+          <p class="card-t">Partagez l'invitation</p>
+          <b>Une personne de votre entourage professionnel serait intéressée ?</b>
+          <p>Transmettez-lui l'invitation : l'inscription est gratuite.</p>
+        </div>
+        <div class="share-b">
+          <a class="sb" href="https://wa.me/?text=Je%20participe%20%C3%A0%20la%20Masterclass%20gratuite%20de%20ClientX%20%C2%AB%20Recrutez%20votre%20%C3%A9quipe%20d%27agents%20IA%20%C2%BB%2C%20mardi%2013%20octobre%20%C3%A0%2011h%2C%20en%20ligne.%20Inscription%20gratuite%20%3A%20https%3A%2F%2Fmasterclass-clientx.vercel.app%2F%3Futm_source%3Dparrainage%26utm_medium%3Dwhatsapp%26utm_campaign%3Dmasterclass_13oct" target="_blank" rel="noopener"><svg class="ic"><use href="#cc-chat"/></svg>WhatsApp</a>
+          <a class="sb" href="mailto:?subject=Masterclass%20gratuite%20%3A%20Recrutez%20votre%20%C3%A9quipe%20d%27agents%20IA%20%C2%B7%2013%20octobre&amp;body=Bonjour%2C%0A%0AJe%20participe%20%C3%A0%20la%20Masterclass%20gratuite%20de%20ClientX%20%C2%AB%20Recrutez%20votre%20%C3%A9quipe%20d%27agents%20IA%20%C2%BB%2C%20mardi%2013%20octobre%20%C3%A0%2011h%2C%20en%20ligne.%20Inscription%20gratuite%20%3A%20https%3A%2F%2Fmasterclass-clientx.vercel.app%2F%3Futm_source%3Dparrainage%26utm_medium%3Demail%26utm_campaign%3Dmasterclass_13oct%0A%0ABien%20%C3%A0%20vous"><svg class="ic"><use href="#cc-mail"/></svg>Email</a>
+          <button class="sb" type="button" data-copy="https://masterclass-clientx.vercel.app/?utm_source=parrainage&amp;utm_medium=lien&amp;utm_campaign=masterclass_13oct"><svg class="ic"><use href="#cc-link"/></svg><span>Copier le lien</span></button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="foot"><div class="w foot-in"><img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_320/u_https://assets.cdn.filesafe.space/yKKBFo4WiCYiUP0GEgmp/media/abe66a2a-79b5-4352-94d3-374490b0ac92.png" alt="ClientX - AI eXperience Growth" width="122" height="42"><p>Masterclass · Mardi 13 octobre · 11h · ClientX by Webeuz</p></div></footer>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('cxc');
+  if (!root || root.getAttribute('data-ready')) return;
+  root.setAttribute('data-ready', '1');
+
+  // Prenom optionnel passe dans l'URL (?first_name= ou ?prenom=)
+  try {
+    var q = new URLSearchParams(window.location.search);
+    var p = (q.get('first_name') || q.get('prenom') || '').trim();
+    if (p && p.length < 40) root.querySelector('[data-hello]').textContent = 'Bonjour ' + p.charAt(0).toUpperCase() + p.slice(1);
+  } catch (e) {}
+
+  // Fichier .ics (Apple Calendar, Outlook desktop...)
+  var ics = [
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//ClientX//Masterclass//FR', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+    'BEGIN:VEVENT', 'UID:masterclass-clientx-20261013@clientx.ai', 'DTSTAMP:20260930T120000Z',
+    'DTSTART:20261013T100000Z', 'DTEND:20261013T110000Z',
+    "SUMMARY:Masterclass ClientX : Recrutez votre équipe d'agents IA", "DESCRIPTION:Masterclass gratuite en direct. Le lien Zoom vous a été envoyé par WhatsApp et par email.", "LOCATION:En ligne sur Zoom (lien envoyé par WhatsApp et email)",
+    'BEGIN:VALARM', 'TRIGGER:-PT30M', 'ACTION:DISPLAY', 'DESCRIPTION:La Masterclass ClientX commence dans 30 minutes', 'END:VALARM',
+    'END:VEVENT', 'END:VCALENDAR'
+  ].join('\r\n');
+  var a = root.querySelector('[data-ics]');
+  if (a) a.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+
+  // v3 : copier le lien d'invitation
+  var cp = root.querySelector('[data-copy]');
+  if (cp) cp.addEventListener('click', function () {
+    var u = cp.getAttribute('data-copy'), lb = cp.querySelector('span');
+    var done = function () { lb.textContent = 'Lien copié'; setTimeout(function () { lb.textContent = 'Copier le lien'; }, 2200); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u).then(done, function () { window.prompt('Copiez ce lien :', u); });
+    else window.prompt('Copiez ce lien :', u);
+  });
+
+  // Evenement Lead du pixel Meta (une seule fois par session, attend le chargement du pixel)
+  var fired = false;
+  try { fired = sessionStorage.getItem('cxm_lead_13oct') === '1'; } catch (e) {}
+  if (!fired) {
+    (function fire(n) {
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: 'Masterclass 13 octobre' });
+        try { sessionStorage.setItem('cxm_lead_13oct', '1'); } catch (e) {}
+      } else if (n < 40) { setTimeout(function () { fire(n + 1); }, 250); }
+    })(0);
+  }
+})();
+</script>

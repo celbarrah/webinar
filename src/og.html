@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1200px;height:630px;background:#000;color:#f4f6f5;font-family:Inter,sans-serif;overflow:hidden;position:relative}
+body::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(80% 90% at 75% 20%,#000 20%,transparent 75%)}
+body::after{content:"";position:absolute;width:900px;height:700px;right:-260px;top:-300px;background:radial-gradient(closest-side,rgba(55,202,55,.3),transparent)}
+.wrap{position:relative;z-index:1;display:flex;height:100%;padding:64px 72px;gap:40px}
+.l{flex:1;display:flex;flex-direction:column}
+.badge{align-self:flex-start;font-size:19px;font-weight:700;letter-spacing:.14em;color:#37ca37;border:1.5px solid rgba(55,202,55,.45);background:rgba(55,202,55,.08);padding:10px 20px;border-radius:999px}
+h1{font-size:84px;line-height:1;letter-spacing:-.045em;font-weight:800;margin:34px 0 30px}
+h1 em{font-style:normal;color:#37ca37}
+.meta{font-size:27px;font-weight:700;color:#e6ebe8}
+.meta span{color:#37ca37;margin:0 10px}
+.logo{margin-top:auto;height:58px;width:auto;align-self:flex-start}
+.r{width:300px;display:flex;flex-direction:column;justify-content:center;gap:18px}
+.a{display:flex;align-items:center;gap:18px;background:rgba(18,22,19,.9);border:1.5px solid rgba(255,255,255,.12);border-radius:22px;padding:14px 18px}
+.a img{width:78px;height:78px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #000,0 0 0 5px rgba(55,202,55,.5)}
+.a b{display:block;font-size:28px;font-weight:800}
+.a span{font-size:18px;color:#37ca37;font-weight:700}
+</style></head>
+<body><div class="wrap">
+  <div class="l">
+    <p class="badge">MASTERCLASS GRATUITE</p>
+    <h1>Recrutez votre équipe d'<em>agents IA</em></h1>
+    <p class="meta">Mardi 13 octobre<span>·</span>11h<span>·</span>En ligne sur Zoom</p>
+    <img class="logo" src="{{LOGO_FOOTER}}" alt="">
+  </div>
+  <div class="r">
+    <div class="a"><img src="{{IMG_AXEL}}" alt=""><div><b>Axel</b><span>Prospects et RDV</span></div></div>
+    <div class="a"><img src="{{IMG_MAX}}" alt=""><div><b>Max</b><span>Automatisation</span></div></div>
+    <div class="a"><img src="{{IMG_JADE}}" alt=""><div><b>Jade</b><span>Avis Google</span></div></div>
+  </div>
+</div></body></html>

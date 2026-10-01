@@ -736,10 +736,16 @@ fbq('track', 'PageView');
       inputs.forEach(function (i) { data[i.name] = i.value.trim(); });
       for (var k in utm) data[k] = utm[k];
       fe.hidden = true; btn.disabled = true; btn.textContent = 'Réservation en cours…';
-      fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok && j.ok, j: j }; }); })
-        .then(function (x) {
-          if (!x.ok) throw x.j;
+      fetch('https://radouane.automatespot.com/webhook-test/d4480c0d-d77d-43af-90a8-c6dfb477f87b', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error('Webhook error: HTTP ' + r.status);
+          return r;
+        })
+        .then(function () {
           window.location.href = '/merci?first_name=' + encodeURIComponent(data.first_name);
         })
         .catch(function (err) {

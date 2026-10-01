@@ -1,49 +1,11 @@
-// POST /api/register - inscription Masterclass 13 octobre -> contact ClientX (API LeadConnector v2)
-// Env : CLIENTX_TOKEN (jeton d'integration privee du sous-compte ClientX.ma, locationId sMBdtpAowNv22pz2kxma), CLIENTX_LOCATION_ID,
-//       CLIENTX_TAG (defaut webinar-13oct), CLIENTX_FIELDS (optionnel, JSON {"utm_source":"<id>",...,"job_title":"<id>"})
-const API = 'https://services.leadconnectorhq.com';
+// POST /api/register - inscription Masterclass 13 octobre -> webhook
+// Sends form data with UTM parameters to webhook
+
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-let fieldCache = null;
+const WEBHOOK_URL = 'https://radouane.automatespot.com/webhook-test/d4480c0d-d77d-43af-90a8-c6dfb477f87b';
 
 const clip = (v, n = 150) => String(v ?? '').trim().slice(0, n);
-
-async function api(path, init = {}) {
-  const r = await fetch(API + path, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${process.env.CLIENTX_TOKEN}`,
-      Version: '2021-07-28',
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (compatible; ClientX-Masterclass-LP/1.0)',
-    },
-  });
-  const text = await r.text();
-  let body;
-  try { body = JSON.parse(text); } catch { body = { raw: text.slice(0, 300) }; }
-  if (!r.ok) {
-    const err = new Error(`ClientX ${r.status} ${path}`);
-    err.body = body;
-    throw err;
-  }
-  return body;
-}
-
-// IDs des champs personnalises (UTM + Fonction), resolus une fois par instance
-async function fieldIds(locationId) {
-  if (fieldCache) return fieldCache;
-  if (process.env.CLIENTX_FIELDS) return (fieldCache = JSON.parse(process.env.CLIENTX_FIELDS));
-  const { customFields = [] } = await api(`/locations/${locationId}/customFields?model=contact`);
-  const ids = {};
-  for (const f of customFields) {
-    const key = String(f.fieldKey || '').replace(/^contact\./, '').toLowerCase();
-    const name = String(f.name || '').trim().toLowerCase();
-    for (const k of UTM_KEYS) if (key === k || name === k) ids[k] ||= f.id;
-    if (key === 'fonction' || name === 'fonction') ids.job_title ||= f.id;
-  }
-  return (fieldCache = ids);
-}
 
 // Numero -> E.164, Maroc par defaut (06..., 6..., 212..., 00212..., +212 0...)
 export function normPhone(raw) {
@@ -68,6 +30,7 @@ export default async function handler(req, res) {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ ok: false });
   }
+
   let b = req.body || {};
   if (typeof b === 'string') { try { b = JSON.parse(b); } catch { b = {}; } }
 
@@ -82,6 +45,7 @@ export default async function handler(req, res) {
     company: clip(b.company),
     job_title: clip(b.job_title),
   };
+
   const utm = {};
   for (const k of UTM_KEYS) if (b[k]) utm[k] = clip(b[k], 200);
 
@@ -93,43 +57,36 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, message, fields: missing });
   }
 
-  const token = process.env.CLIENTX_TOKEN;
-  const locationId = process.env.CLIENTX_LOCATION_ID;
-  const tag = process.env.CLIENTX_TAG || 'webinar-13oct';
-  if (!token || !locationId) {
-    console.error('LEAD_NOT_SAVED config manquante', JSON.stringify({ lead, utm }));
-    return res.status(503).json({ ok: false, message: "Les inscriptions ouvrent dans quelques instants. Merci de réessayer un peu plus tard." });
-  }
-
   try {
-    const ids = await fieldIds(locationId);
-    const customFields = [];
-    for (const k of UTM_KEYS) if (utm[k] && ids[k]) customFields.push({ id: ids[k], field_value: utm[k] });
-    if (ids.job_title) customFields.push({ id: ids.job_title, field_value: lead.job_title });
+    // Send to webhook
+    const payload = {
+      firstName: lead.first_name,
+      lastName: lead.last_name,
+      email: lead.email,
+      phone: lead.phone,
+      company: lead.company,
+      jobTitle: lead.job_title,
+      ...utm, // Include all UTM parameters
+      timestamp: new Date().toISOString(),
+      source: 'LP Masterclass 13 octobre',
+    };
 
-    const up = await api('/contacts/upsert', {
+    const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
-      body: JSON.stringify({
-        locationId,
-        firstName: lead.first_name,
-        lastName: lead.last_name,
-        name: `${lead.first_name} ${lead.last_name}`,
-        email: lead.email,
-        phone: lead.phone,
-        companyName: lead.company,
-        source: 'LP Masterclass 13 octobre',
-        customFields,
-      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     });
-    const id = up?.contact?.id;
-    if (!id) throw Object.assign(new Error('contact id absent'), { body: up });
 
-    // Tag ajoute a part : l'upsert remplace les tags existants, l'endpoint /tags les complete
-    await api(`/contacts/${id}/tags`, { method: 'POST', body: JSON.stringify({ tags: [tag] }) });
-    console.log('LEAD_OK', id, JSON.stringify(utm));
+    if (!response.ok) {
+      throw new Error(`Webhook returned ${response.status}`);
+    }
+
+    console.log('LEAD_OK', JSON.stringify({ ...lead, utm }));
     return res.status(200).json({ ok: true });
   } catch (e) {
-    console.error('LEAD_NOT_SAVED', e.message, JSON.stringify(e.body || {}).slice(0, 500), JSON.stringify({ lead, utm }));
+    console.error('WEBHOOK_ERROR', e.message, JSON.stringify({ lead, utm }));
     return res.status(502).json({ ok: false, message: 'Une erreur est survenue. Réessayez dans un instant.' });
   }
 }
